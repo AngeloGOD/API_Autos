@@ -1,5 +1,5 @@
 package com.example.demo.controller;
-
+import java.math.BigDecimal;
 import com.example.demo.modelo.Auto;
 import com.example.demo.modelo.Marca;
 
@@ -88,7 +88,7 @@ public class ApiController {
 
             @RequestParam String marca,
 
-            @RequestParam Double precioMin,
+            @RequestParam BigDecimal precioMin,
 
             @RequestParam Integer modelo
     ) {

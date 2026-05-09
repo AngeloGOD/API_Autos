@@ -1,9 +1,11 @@
 package com.example.demo.repository;
+
 import com.example.demo.modelo.Auto;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface AutoRepository
@@ -29,7 +31,7 @@ public interface AutoRepository
     """)
     List<Auto> filtroCompleto(
             @Param("marca") String marca,
-            @Param("precioMin") Double precioMin,
+            @Param("precioMin") BigDecimal precioMin,
             @Param("modelo") Integer modelo
     );
 }
