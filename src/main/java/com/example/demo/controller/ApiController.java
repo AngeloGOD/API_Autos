@@ -54,14 +54,21 @@ public class ApiController {
 
     // METODO 3
     @PostMapping("/autos")
-    public Auto registrarAuto(
+    public String registrarAuto(@RequestBody Auto auto) {
 
-            @RequestBody Auto auto
-    ) {
+        try {
 
-        return autoRepository.save(auto);
+            autoRepository.save(auto);
+
+            return "Auto registrado";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+        }
     }
 
+    
     // METODO 4
     @GetMapping("/autos/marca/{nombre}")
     public List<Auto> autosPorMarca(
@@ -71,8 +78,11 @@ public class ApiController {
 
         return autoRepository.buscarPorMarca(nombre);
     }
-
-    // METODO 5
+    
+    
+    
+    
+    // METODO 5 
     @GetMapping("/autos")
     public List<Auto> filtroAutos(
 

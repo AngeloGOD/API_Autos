@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import java.math.BigDecimal;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +16,7 @@ public class Auto {
 
     private Integer modelo;
 
-    private Double precio;
+    private BigDecimal precio;
 
     @ManyToOne
     @JoinColumn(name = "id_marca")
@@ -29,7 +30,7 @@ public class Auto {
     public Auto(String noSerie,
                 String tipo,
                 Integer modelo,
-                Double precio,
+                BigDecimal precio,
                 Marca marca) {
 
         this.noSerie = noSerie;
@@ -65,11 +66,11 @@ public class Auto {
         this.modelo = modelo;
     }
 
-    public Double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
