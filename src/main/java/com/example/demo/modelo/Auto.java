@@ -1,6 +1,9 @@
 package com.example.demo.modelo;
 
 import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -20,6 +23,10 @@ public class Auto {
 
     @ManyToOne
     @JoinColumn(name = "id_marca")
+    @JsonIgnoreProperties({
+            "hibernateLazyInitializer",
+            "handler"
+    })
     private Marca marca;
 
     // constructor vacio
@@ -27,11 +34,13 @@ public class Auto {
     }
 
     // constructor lleno
-    public Auto(String noSerie,
-                String tipo,
-                Integer modelo,
-                BigDecimal precio,
-                Marca marca) {
+    public Auto(
+            String noSerie,
+            String tipo,
+            Integer modelo,
+            BigDecimal precio,
+            Marca marca
+    ) {
 
         this.noSerie = noSerie;
         this.tipo = tipo;

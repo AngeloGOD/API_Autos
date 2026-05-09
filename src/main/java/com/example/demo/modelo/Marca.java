@@ -1,10 +1,16 @@
 package com.example.demo.modelo;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "marcas")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({
+        "hibernateLazyInitializer",
+        "handler"
+})
+
 public class Marca {
 
     @Id
@@ -22,9 +28,11 @@ public class Marca {
     }
 
     // constructor lleno
-    public Marca(Integer idMarca,
-                 String nombre,
-                 String pais) {
+    public Marca(
+            Integer idMarca,
+            String nombre,
+            String pais
+    ) {
 
         this.idMarca = idMarca;
         this.nombre = nombre;
