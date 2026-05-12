@@ -99,4 +99,21 @@ public class ApiController {
                 modelo
         );
     }
+    
+    
+    
+    @PostMapping("/marcas")
+    public String registrarMarca(@RequestBody Marca marca) {
+
+        try {
+
+            marcaRepository.save(marca);
+
+            return "Marca registrada";
+
+        } catch (Exception e) {
+
+            return e.getMessage();
+        }
+    }
 }
