@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.modelo.Auto;
-
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -11,26 +10,26 @@ import java.util.List;
 public interface AutoRepository
         extends JpaRepository<Auto, String> {
 
-    // METODO 4
+    // METODO 4 (por id_marca)
     @Query("""
         SELECT a
         FROM Auto a
-        WHERE LOWER(a.marca.nombre)=LOWER(:nombre)
+        WHERE a.idMarca = :idMarca
     """)
     List<Auto> buscarPorMarca(
-            @Param("nombre") String nombre
+            @Param("idMarca") Integer idMarca
     );
 
-    // METODO 5
+    // METODO 5 (filtro completo corregido)
     @Query("""
         SELECT a
         FROM Auto a
-        WHERE LOWER(a.marca.nombre)=LOWER(:marca)
+        WHERE a.idMarca = :idMarca
         AND a.precio >= :precioMin
         AND a.modelo >= :modelo
     """)
     List<Auto> filtroCompleto(
-            @Param("marca") String marca,
+            @Param("idMarca") Integer idMarca,
             @Param("precioMin") BigDecimal precioMin,
             @Param("modelo") Integer modelo
     );

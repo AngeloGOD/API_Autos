@@ -82,11 +82,10 @@ public class ApiController {
     
     
     
-    // METODO 5 
     @GetMapping("/autos")
     public List<Auto> filtroAutos(
 
-            @RequestParam String marca,
+            @RequestParam Integer idMarca,
 
             @RequestParam BigDecimal precioMin,
 
@@ -94,7 +93,7 @@ public class ApiController {
     ) {
 
         return autoRepository.filtroCompleto(
-                marca,
+                idMarca,
                 precioMin,
                 modelo
         );
