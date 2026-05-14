@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "marcas")
+
 @JsonIgnoreProperties({
         "hibernateLazyInitializer",
         "handler"
@@ -23,11 +24,11 @@ public class Marca {
 
     private String pais;
 
-    // constructor vacio
+    // CONSTRUCTOR VACIO
     public Marca() {
     }
 
-    // constructor lleno
+    // CONSTRUCTOR LLENO
     public Marca(
             Integer idMarca,
             String nombre,
@@ -39,7 +40,7 @@ public class Marca {
         this.pais = pais;
     }
 
-    // getters y setters
+    // GETTERS Y SETTERS
 
     public Integer getIdMarca() {
         return idMarca;

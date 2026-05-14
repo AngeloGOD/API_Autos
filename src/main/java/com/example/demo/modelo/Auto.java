@@ -22,18 +22,23 @@ public class Auto {
     private BigDecimal precio;
 
     @ManyToOne
-    @JoinColumn(name = "id_marca")
+    @JoinColumn(
+    	    name = "id_marca",
+    	    referencedColumnName = "id_marca"
+    	)
+
     @JsonIgnoreProperties({
             "hibernateLazyInitializer",
             "handler"
     })
+
     private Marca marca;
 
-    // constructor vacio
+    // CONSTRUCTOR VACIO
     public Auto() {
     }
 
-    // constructor lleno
+    // CONSTRUCTOR LLENO
     public Auto(
             String noSerie,
             String tipo,
@@ -49,7 +54,7 @@ public class Auto {
         this.marca = marca;
     }
 
-    // getters y setters
+    // GETTERS Y SETTERS
 
     public String getNoSerie() {
         return noSerie;

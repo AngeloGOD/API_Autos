@@ -1,5 +1,8 @@
 package com.example.demo.controller;
+
 import java.math.BigDecimal;
+import java.util.List;
+
 import com.example.demo.modelo.Auto;
 import com.example.demo.modelo.Marca;
 
@@ -7,11 +10,11 @@ import com.example.demo.repository.AutoRepository;
 import com.example.demo.repository.MarcaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -24,8 +27,12 @@ public class ApiController {
     @Autowired
     private AutoRepository autoRepository;
 
-    // METODO 1
+    // =====================================
+    // OBTENER MARCAS
+    // =====================================
+
     @GetMapping("/marcas")
+
     public Page<Marca> obtenerMarcas(
 
             @RequestParam(defaultValue = "0")
@@ -40,21 +47,66 @@ public class ApiController {
         );
     }
 
-    // METODO 2
-    @DeleteMapping("/autos/{noSerie}")
-    public String eliminarAuto(
+    // =====================================
+    // OBTENER TODOS LOS AUTOS O FILTRAR
+    // =====================================
 
-            @PathVariable String noSerie
+    @GetMapping("/autos")
+
+    public List<Auto> filtroAutos(
+
+            @RequestParam(required = false)
+            Integer idMarca,
+
+            @RequestParam(required = false)
+            BigDecimal precioMin,
+
+            @RequestParam(required = false)
+            Integer modelo
     ) {
 
-        autoRepository.deleteById(noSerie);
+        // SI VIENEN LOS 3 PARÁMETROS
+        if (
+                idMarca != null &&
+                precioMin != null &&
+                modelo != null
+        ) {
 
-        return "Auto eliminado";
+            return autoRepository
+                    .findByMarca_IdMarcaAndPrecioGreaterThanEqualAndModeloGreaterThanEqual(
+
+                            idMarca,
+                            precioMin,
+                            modelo
+                    );
+        }
+
+        // SI NO, TRAER TODOS
+        return autoRepository.findAll();
     }
 
-    // METODO 3
+    // =====================================
+    // BUSCAR AUTOS POR MARCA
+    // =====================================
+
+    @GetMapping("/autos/marca/{idMarca}")
+
+    public List<Auto> autosPorMarca(
+            @PathVariable Integer idMarca
+    ) {
+
+        return autoRepository.findByMarca_IdMarca(idMarca);
+    }
+
+    // =====================================
+    // REGISTRAR AUTO
+    // =====================================
+
     @PostMapping("/autos")
-    public String registrarAuto(@RequestBody Auto auto) {
+
+    public String registrarAuto(
+            @RequestBody Auto auto
+    ) {
 
         try {
 
@@ -68,41 +120,30 @@ public class ApiController {
         }
     }
 
-    
-    // METODO 4
-    @GetMapping("/autos/marca/{nombre}")
-    public List<Auto> autosPorMarca(
+    // =====================================
+    // ELIMINAR AUTO
+    // =====================================
 
-            @PathVariable String nombre
+    @DeleteMapping("/autos/{noSerie}")
+
+    public String eliminarAuto(
+            @PathVariable String noSerie
     ) {
 
-        return autoRepository.buscarPorMarca(nombre);
+        autoRepository.deleteById(noSerie);
+
+        return "Auto eliminado";
     }
-    
-    
-    
-    
-    @GetMapping("/autos")
-    public List<Auto> filtroAutos(
 
-            @RequestParam Integer idMarca,
+    // =====================================
+    // REGISTRAR MARCA
+    // =====================================
 
-            @RequestParam BigDecimal precioMin,
-
-            @RequestParam Integer modelo
-    ) {
-
-        return autoRepository.filtroCompleto(
-                idMarca,
-                precioMin,
-                modelo
-        );
-    }
-    
-    
-    
     @PostMapping("/marcas")
-    public String registrarMarca(@RequestBody Marca marca) {
+
+    public String registrarMarca(
+            @RequestBody Marca marca
+    ) {
 
         try {
 
